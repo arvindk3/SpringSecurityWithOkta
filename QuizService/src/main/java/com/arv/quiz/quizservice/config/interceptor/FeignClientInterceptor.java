@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Configuration
 public class FeignClientInterceptor implements RequestInterceptor {
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String BEARER_TOKEN_TYPE = "Bearer";
 
     private OAuth2AuthorizedClientManager manager;
 
@@ -23,7 +21,7 @@ public class FeignClientInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
         String token=manager.authorize(OAuth2AuthorizeRequest.withClientRegistrationId("my-internal-client").principal("internal").build()).getAccessToken().getTokenValue();
-        requestTemplate.header(AUTHORIZATION_HEADER,BEARER_TOKEN_TYPE +token);
+        requestTemplate.header("Authorization","Bearer "+token);
 
     }
 }

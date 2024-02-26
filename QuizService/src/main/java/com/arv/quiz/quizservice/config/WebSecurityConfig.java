@@ -1,6 +1,6 @@
 package com.arv.quiz.quizservice.config;
 
-import com.arv.quiz.quizservice.config.interceptor.FeignClientInterceptor;
+//import com.arv.quiz.quizservice.config.interceptor.FeignClientInterceptor;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

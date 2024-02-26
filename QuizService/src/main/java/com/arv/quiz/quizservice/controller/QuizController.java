@@ -8,6 +8,7 @@ import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,13 +29,14 @@ public class QuizController {
         return quizService.add(quiz);
     }
 
-   // int retry=1;
+    int retry=1;
+   //@PreAuthorize("hasAuthority('Admin')")
     @GetMapping
     @Retry(name="quizQuestionAll",fallbackMethod = "quizQuestionFallbackMethodAll")
     //@RateLimiter(name="quizQuestionRateLimiter",fallbackMethod = "quizQuestionFallbackMethodAll")
     public List<Quiz> get(){
-    //    System.out.println("retry ::" +retry);
-     //   retry++;
+        System.out.println("retry ::" +retry);
+       retry++;
         return quizService.get();
     }
 
@@ -57,7 +59,7 @@ e.printStackTrace();
         return quiz;
     }
 
-
+    //@PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/{id}")
     @CircuitBreaker(name="quizQuestion",fallbackMethod = "quizQuestionFallbackMethod")
     public Quiz getOne(@PathVariable Long id){
